@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  fastapi:
+    build: .
+    ports:
+      - "80:8000"
+    volumes:
+      - ".:/usr/app/src"
