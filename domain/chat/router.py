@@ -6,10 +6,11 @@ from .service.chat_room import Chat_Room_Service
 from .dto.chat import Chat_Base, Chat_Request, Chat_List_Response
 from .dto.chat_room import Chat_Room_Base, Chat_Room_Response, Chat_Room_Delete_Response
 from db import get_db
+from config.config import config
 
 router = APIRouter(prefix="/chat")
 
-chat_service = Chat_Service(chatbot=ChatOpenAI())
+chat_service = Chat_Service(chatbot=ChatOpenAI(openai_api_key=config["OPENAI_API_KEY"]))
 chat_room_service = Chat_Room_Service()
 
 @router.post("/room", status_code=201, response_model=Chat_Room_Response)

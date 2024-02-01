@@ -4,9 +4,13 @@ services:
   fastapi:
     build: .
     ports:
-      - "80:8000"
+      - "8530:8000"
     volumes:
       - ".:/usr/app/src"
+    links:
+      - db
+    depends_on:
+      - db
     networks:
       - fastapi_mysql_network
   db:
@@ -17,7 +21,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
       MYSQL_DATABASE: '${DB_DATABASE}'
-      MYSQL_PASSWORD: '${DB_PASSOWRD}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
     ports:
       - "3306:3306"
     networks:
