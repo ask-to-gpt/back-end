@@ -9,8 +9,5 @@ class Chat_Room_Response(Chat_Room_Base):
     id: int
     created_at: datetime.datetime
 
-    class Config:
-        orm_mode = True
-
 class Chat_Room_Delete_Response(BaseModel):
     message: str

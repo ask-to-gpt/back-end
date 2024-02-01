@@ -12,6 +12,21 @@ router = APIRouter(prefix="/chat")
 chat_service = Chat_Service(chatbot=ChatOpenAI())
 chat_room_service = Chat_Room_Service()
 
+@router.post("/room", status_code=201, response_model=Chat_Room_Response)
+async def create_chat_room(
+    room_request: Chat_Room_Base, 
+    db: Session = Depends(get_db)):
+
+    created_room = chat_room_service.create_room(db, room_request)
+    room_dto = Chat_Room_Response(
+        id=created_room.id,
+        user_id=created_room.user_id,
+        date=created_room.date,
+        created_at=created_room.created_at
+    )
+
+    return room_dto
+
 @router.get("/room/{id}", response_model=Chat_List_Response)
 async def get_chat(id:int, db: Session = Depends(get_db)):
     chat_list = chat_service.get_contents(db, id)
@@ -32,21 +47,6 @@ async def chat(id: int, chat_request: Chat_Request, db: Session = Depends(get_db
         content=answer.content, 
         created_at=answer.created_at
     )
-
-@router.post("/room", status_code=201, response_model=Chat_Room_Response)
-async def create_chat_room(
-    room_request: Chat_Room_Base, 
-    db: Session = Depends(get_db)):
-
-    created_room = chat_room_service.create_room(db, room_request)
-    room_dto = Chat_Room_Response(
-        id=created_room.id,
-        user_id=created_room.user_id,
-        date=created_room.date,
-        created_at=created_room.created_at
-    )
-
-    return room_dto
 
 @router.delete("/room/{id}", response_model=Chat_Room_Delete_Response)
 async def delete_chat_room(id: int, db: Session = Depends(get_db)):

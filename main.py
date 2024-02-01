@@ -12,6 +12,7 @@ from config.config import config
 
 ### routers ###
 from domain.chat.router import router as chat_router
+from domain.diary.router import router as diary_router
 
 os.environ["OPENAI_API_KEY"] = config["OPENAI_API_KEY"]
 
@@ -41,3 +42,4 @@ async def http_excpetion_handler(request: Request, exc: StarletteHTTPException):
 
 ###### Routers ######
 app.include_router(chat_router)
+app.include_router(diary_router)
