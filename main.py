@@ -1,3 +1,4 @@
+import os
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError
@@ -7,8 +8,12 @@ from fastapi.exception_handlers import (
 )
 
 from starlette.exceptions import HTTPException as StarletteHTTPException
-from domain.chat.router import router as chat_router
 from config.config import config
+
+### routers ###
+from domain.chat.router import router as chat_router
+
+os.environ["OPENAI_API_KEY"] = config["OPENAI_API_KEY"]
 
 app = FastAPI()
 

@@ -1,3 +1,4 @@
 .env
 ask-to-gpt-server
 __pycache__
+alembic.ini
