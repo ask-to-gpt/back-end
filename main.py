@@ -13,8 +13,6 @@ from config.config import config
 ### routers ###
 from domain.chat.router import router as chat_router
 
-os.environ["OPENAI_API_KEY"] = config["OPENAI_API_KEY"]
-
 app = FastAPI()
 
 ###### CORS Middleware Options ######
