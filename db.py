@@ -5,6 +5,7 @@ from config.config import config
 
 ### Models ### 
 from domain.chat.model.chat import Base as Chat_Base
+from domain.diary.model.diary import Base as Diary_Base
 
 db_url = 'mysql+pymysql://{}:{}@{}:{}/{}'.format(
     config["DB_USER"],
@@ -20,6 +21,7 @@ engine = create_engine(
 session_local = sessionmaker(bind=engine)
 
 Chat_Base.metadata.create_all(bind=engine)
+Diary_Base.metadata.create_all(bind=engine)
 
 def get_db():
     db = session_local()
