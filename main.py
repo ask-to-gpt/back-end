@@ -11,8 +11,8 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from config.config import config
 
 ### routers ###
-from domain.chat.router import router as chat_router
-from domain.diary.router import router as diary_router
+from router.chat import router as chat_router
+from router.diary import router as diary_router
 
 os.environ["OPENAI_API_KEY"] = config["OPENAI_API_KEY"]
 
