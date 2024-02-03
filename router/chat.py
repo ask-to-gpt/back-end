@@ -11,8 +11,8 @@ router = APIRouter(prefix="/chat")
 chat_service = Chat_Service(chatbot=ChatOpenAI(openai_api_key=config["OPENAI_API_KEY"]))
 
 @router.get("/{diary_id}", response_model=Chat_List_Response)
-async def get_chat(id:int, db: Session = Depends(get_db)):
-    chat_list = chat_service.get_contents(db, id)
+async def get_chat(diary_id:int, db: Session = Depends(get_db)):
+    chat_list = chat_service.get_contents(db, diary_id)
     res_list = [
         Chat_Base(
             user_id=chat.user_id, 
@@ -23,8 +23,8 @@ async def get_chat(id:int, db: Session = Depends(get_db)):
     return Chat_List_Response(chat_list=res_list)
 
 @router.post("/{diary_id}", response_model=Chat_Base)
-async def chat(id: int, chat_request: Chat_Request, db: Session = Depends(get_db)):
-    answer = chat_service.create_question(db, chat_request, id)
+async def chat(diary_id: int, chat_request: Chat_Request, db: Session = Depends(get_db)):
+    answer = chat_service.create_question(db, chat_request, diary_id)
     return Chat_Base(
         user_id=answer.user_id,
         content=answer.content, 
